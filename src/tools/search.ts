@@ -11,7 +11,7 @@ export const searchFaultsSchema = z.object({
 export async function searchFaults(
   params: z.infer<typeof searchFaultsSchema>,
   api: HoneybadgerApi
-) {
+): Promise<any> {
   try {
     // Find project by name or ID
     const project = await api.findProject(params.projectNameOrId);
@@ -104,7 +104,7 @@ export const getBacktraceSchema = z.object({
 export async function getBacktrace(
   params: z.infer<typeof getBacktraceSchema>,
   api: HoneybadgerApi
-) {
+): Promise<any> {
   try {
     // Find project by name or ID
     const project = await api.findProject(params.projectNameOrId);

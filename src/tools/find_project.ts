@@ -8,7 +8,7 @@ export const findProjectSchema = z.object({
 export async function findProject(
   params: z.infer<typeof findProjectSchema>,
   api: HoneybadgerApi
-) {
+): Promise<any> {
   try {
     // Try to find the project by name or ID
     const project = await api.findProject(params.nameOrId);

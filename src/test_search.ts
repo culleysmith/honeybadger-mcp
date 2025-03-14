@@ -15,14 +15,15 @@ async function searchForErrors() {
     console.log('Projects API response:', JSON.stringify(projectsResponse, null, 2).substring(0, 500));
     
     // Try to handle different possible response formats
-    let projects = [];
+    let projects: any[] = [];
     if (Array.isArray(projectsResponse)) {
       projects = projectsResponse;
     } else if (projectsResponse && typeof projectsResponse === 'object') {
-      if (Array.isArray(projectsResponse.results)) {
-        projects = projectsResponse.results;
-      } else if (projectsResponse.projects && Array.isArray(projectsResponse.projects)) {
-        projects = projectsResponse.projects;
+      const response = projectsResponse as any;
+      if (Array.isArray(response.results)) {
+        projects = response.results;
+      } else if (response.projects && Array.isArray(response.projects)) {
+        projects = response.projects;
       }
     }
     
@@ -51,7 +52,7 @@ async function searchForErrors() {
           if (notices.length > 0) {
             const hasStacktrace = notices[0].backtrace && notices[0].backtrace.length > 0;
             console.log(`  Has stacktrace: ${hasStacktrace ? 'Yes' : 'No'}`);
-            if (hasStacktrace) {
+            if (hasStacktrace && notices[0].backtrace && notices[0].backtrace[0]) {
               console.log(`  First frame: ${notices[0].backtrace[0].file}:${notices[0].backtrace[0].number}`);
             }
           } else {
@@ -72,7 +73,7 @@ async function searchForErrors() {
           if (notices.length > 0) {
             const hasStacktrace = notices[0].backtrace && notices[0].backtrace.length > 0;
             console.log(`  Has stacktrace: ${hasStacktrace ? 'Yes' : 'No'}`);
-            if (hasStacktrace) {
+            if (hasStacktrace && notices[0].backtrace && notices[0].backtrace[0]) {
               console.log(`  First frame: ${notices[0].backtrace[0].file}:${notices[0].backtrace[0].number}`);
             }
           } else {

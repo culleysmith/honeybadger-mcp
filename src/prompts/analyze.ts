@@ -38,7 +38,7 @@ export const PROMPT_DEFINITIONS = {
 export async function analyzeErrorPrompt(
   params: { projectNameOrId: string, faultId: string },
   api: HoneybadgerApi
-) {
+): Promise<any> {
   try {
     // Find project by name or ID
     const project = await api.findProject(params.projectNameOrId);
@@ -70,9 +70,9 @@ export async function analyzeErrorPrompt(
           content: {
             type: 'text',
             text: promptData
-          }
+          } as any
         }
-      ]
+      ] as any
     };
   } catch (error) {
     console.error('Error generating analyze error prompt:', error);
@@ -83,7 +83,7 @@ export async function analyzeErrorPrompt(
 export async function summarizeFaultPrompt(
   params: { projectNameOrId: string, faultId: string },
   api: HoneybadgerApi
-) {
+): Promise<any> {
   try {
     // Find project by name or ID
     const project = await api.findProject(params.projectNameOrId);
@@ -111,9 +111,9 @@ export async function summarizeFaultPrompt(
           content: {
             type: 'text',
             text: promptData
-          }
+          } as any
         }
-      ]
+      ] as any
     };
   } catch (error) {
     console.error('Error generating summarize fault prompt:', error);

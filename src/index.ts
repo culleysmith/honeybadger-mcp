@@ -1,6 +1,7 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { config } from 'dotenv';
+import { z } from 'zod';
 import { HoneybadgerApi } from './api/honeybadger.js';
 import { 
   projectsListTemplate, 
@@ -16,7 +17,9 @@ import {
 } from './resources/projects.js';
 import {
   searchFaults,
-  getBacktrace
+  getBacktrace,
+  searchFaultsSchema,
+  getBacktraceSchema
 } from './tools/search.js';
 import {
   findProject,
@@ -153,34 +156,25 @@ async function startServer() {
     // Register tools
     server.tool(
       'find_project',
+      'Find a Honeybadger project by name or ID',
       {
-        nameOrId: { type: 'string', description: 'The name or ID of the project to find' }
+        nameOrId: z.string().describe('The name or ID of the project to find')
       },
-      // @ts-ignore
-      async (params) => findProject(params, api)
+      async (params, extra) => findProject(params, api)
     );
     
     server.tool(
       'search_faults',
-      {
-        projectNameOrId: { type: 'string', description: 'The name or ID of the project to search' },
-        query: { type: 'string', description: 'Search query (e.g. "is:unresolved environment:production")', required: false },
-        environment: { type: 'string', description: 'Filter by environment (e.g. "production", "development")', required: false },
-        limit: { type: 'number', description: 'Maximum number of results to return (max 100)', required: false }
-      },
-      // @ts-ignore
-      async (params) => searchFaults(params, api)
+      'Search for faults in a Honeybadger project',
+      searchFaultsSchema.shape,
+      async (params, extra) => searchFaults(params, api)
     );
     
     server.tool(
       'get_backtrace',
-      {
-        projectNameOrId: { type: 'string', description: 'The name or ID of the project' },
-        faultId: { type: 'number', description: 'The ID of the fault' },
-        limit: { type: 'number', description: 'Maximum number of notices to include (max 10)', required: false }
-      },
-      // @ts-ignore
-      async (params) => getBacktrace(params, api)
+      'Get the backtrace for a specific fault',
+      getBacktraceSchema.shape,
+      async (params, extra) => getBacktrace(params, api)
     );
     
     // Removed resolve_fault tool to ensure the server is read-only
@@ -188,22 +182,22 @@ async function startServer() {
     // Register prompts
     server.prompt(
       PROMPT_DEFINITIONS.analyze_error.name,
+      PROMPT_DEFINITIONS.analyze_error.description,
       {
-        projectNameOrId: { type: 'string' },
-        faultId: { type: 'string' }
+        projectNameOrId: z.string().describe('The name or ID of the project'),
+        faultId: z.string().describe('The ID of the fault')
       },
-      // @ts-ignore
-      async (params) => analyzeErrorPrompt(params, api)
+      async (params, extra) => analyzeErrorPrompt(params, api)
     );
     
     server.prompt(
       PROMPT_DEFINITIONS.summarize_fault.name,
+      PROMPT_DEFINITIONS.summarize_fault.description,
       {
-        projectNameOrId: { type: 'string' },
-        faultId: { type: 'string' }
+        projectNameOrId: z.string().describe('The name or ID of the project'),
+        faultId: z.string().describe('The ID of the fault')
       },
-      // @ts-ignore
-      async (params) => summarizeFaultPrompt(params, api)
+      async (params, extra) => summarizeFaultPrompt(params, api)
     );
     
     // Create a transport for the server
