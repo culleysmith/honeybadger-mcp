@@ -1,6 +1,16 @@
 # Honeybadger MCP Server
 
-An MCP (Model Context Protocol) server that provides access to Honeybadger error tracking data for LLMs like Claude.
+An MCP (Model Context Protocol) server that provides access to [Honeybadger](https://www.honeybadger.io/) error tracking data for LLMs like Claude.
+
+![Honeybadger Logo](https://www.honeybadger.io/images/navbar_logo.svg)
+
+This server allows you to interact with your Honeybadger projects and errors using natural language through Claude or any other MCP-compatible AI assistant.
+
+## Demo
+
+![Demonstration of Honeybadger MCP in action](demo.gif)
+
+> **Note:** Replace with an actual demonstration GIF showing the MCP server in action with Claude.
 
 ## Features
 
@@ -8,9 +18,22 @@ An MCP (Model Context Protocol) server that provides access to Honeybadger error
 - **Tools**: Search for errors, get backtraces, and resolve faults
 - **Prompts**: Generate prompts for error analysis and summaries
 
+## Prerequisites
+
+- [Node.js](https://nodejs.org/) 18.0.0 or higher
+- [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/)
+- A [Honeybadger](https://www.honeybadger.io/) account with API access
+- [Claude Desktop](https://claude.ai/desktop) or another MCP-compatible client
+
 ## Installation
 
-1. Clone this repository
+1. Clone this repository:
+
+```bash
+git clone https://github.com/culleysmith/honeybadger-mcp.git
+cd honeybadger-mcp
+```
+
 2. Install dependencies:
 
 ```bash
@@ -22,6 +45,8 @@ npm install
 ```
 HONEYBADGER_API_TOKEN=your_api_token_here
 ```
+
+You can find your API token in the Honeybadger dashboard under Settings → API Keys.
 
 ## Usage
 
@@ -135,6 +160,38 @@ Here are some example queries you can ask Claude when using this MCP server:
 
 You can use either project names or IDs throughout, making it much more natural to interact with your projects.
 
+## Contributing
+
+Contributions are welcome! Here's how you can help:
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+Please make sure your code follows the existing style and includes appropriate tests.
+
 ## License
 
-MIT
+MIT License
+
+Copyright (c) 2025 Culley Smith
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
