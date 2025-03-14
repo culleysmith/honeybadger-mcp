@@ -1,0 +1,10 @@
+{
+  "honeybadger": {
+    "command": "npx",
+    "args": ["tsx", "/path/to/honeybadger-mcp/src/index.ts"],
+    "env": {
+      "HONEYBADGER_API_TOKEN": "your_api_token_here",
+      "HONEYBADGER_PROJECT_ID": "130943"
+    }
+  }
+}
